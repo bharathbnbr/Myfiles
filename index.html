@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <title>Adding data</title>
+
+    <script src="jquery-3.3.1.min.js"></script>
+
+</head>
+
+<body>
+    <form action="" id="add_form">
+        <table align="center" cellspacing="13px" cellpadding="5px">
+            <tr>
+                <td><b>ADD THE DATA</b></td>
+            </tr><br><br>
+            <tr>
+                <td><label>Name</label></td>
+                <td><input type="text" id="name"></td>
+            </tr>
+            <tr>
+                <td><label>Email</label></td>
+                <td><input type="text" id="email"></td>
+            </tr>
+            <tr>
+                <td><label>Phone</label></td>
+                <td><input type="text" id="phno"></td>
+            </tr>
+            <tr>
+                <td><label>Address</label></td>
+                <td><textarea rows="7" cols="38" id="addr"></textarea></td>
+            </tr>
+            <tr>
+                <td><label>Gender</label></td>
+                <td><select id="gender">
+                        <option value="MALE">MALE</option>
+                        <option value="FEMALE">FEMALE</option>
+                        <option value="OTHERS">OTHERS</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td><input type="button" id="save" value="Save Data" /></td>
+                <td><input type="reset" id="cancel" value="Cancel" /></td>
+            </tr>
+        </table>
+        <div id="d1"></div>
+    </form>
+    <script>
+        var myObj = new Object();
+        $(document).ready(function () {
+            $("#save").click(function () {
+                var name = $("#name").val();
+                var email = $("#email").val();
+                var phno = $("#phno").val();
+                var gender = $("#gender").val();
+                var addr = $("#addr").val();
+
+                myObj = { "name"    : name, "email": email, "phone": phno, "address": addr, "gender": gender };
+                console.log(myObj);
+                //var data_to = JSON.stringify(myObj);
+                //console.log(data_to);
+
+                 $.ajax({
+                    type: 'POST',
+                    url: "http://172.104.190.30:7777/api/v1/users",
+                    data: myObj,
+                    dataType: "JSON",
+                    success: function (response) {
+                        console.log(response);
+                        alert("Data Saved Successfully");
+                        $("#add_form")[0].reset();
+                    },
+                    error: function () {
+                        console.log('Error: ' + data_to);
+                    }
+                }); 
+            })
+            $("#cancel").click(function(){
+                window.location.href="index2.html";
+            })
+            
+        })
+    </script>
+</body>
+
+</html>
